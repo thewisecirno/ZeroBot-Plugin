@@ -1,11 +1,8 @@
-// Package test Package example 这是zbp的插件编写教学示例
-package test
+// Package TouhouRecord Package test Package example 这是zbp的插件编写教学示例
+package TouhouRecord
 
 // import 用来放置你所需要导入的东西, 萌新推荐使用vscode, 它会帮你干很多事
 import (
-	"context"
-	"github.com/go-redis/redis/v8"
-	log "github.com/sirupsen/logrus"
 	"math/rand"
 	"time"
 
@@ -21,25 +18,14 @@ var examplelimit = ctxext.NewLimiterManager(time.Second*10, 1)
 
 // 这里就是插件主体了
 func init() {
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     "47.115.217.189:6379",
-		Password: "qq31415926535--", // no password set
-		DB:       0,                 // use default DB
-	})
-	log.Println(rdb)
-	err := rdb.Set(context.Background(), "key", "value", 0).Err()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
 	// 既然是zbp, 那就从接入control开始, 在这里注册你的插件以及设置是否默认开启和填写帮助和数据存放路径
 	engine := control.Register("example", &ctrl.Options[*zero.Ctx]{
 		// 控制插件是否默认启用 true为默认不启用 false反之
 		DisableOnDefault: false,
 		// 插件的简介
-		Brief: "例",
+		Brief: "东方角色语录随机发送",
 		// 插件的帮助 管理员发送 /用法 example 可见
-		Help: "- example 插件的帮助",
+		Help: "- 灵梦 发送博丽灵梦语录",
 		// 插件的背景图, 支持http和本地路径
 		// Banner: "",
 		// 插件的数据存放路径, 分为公共和私有, 都会在/data下创建目录, 公有需要首字母大写, 私有需要首字母小写
@@ -54,23 +40,6 @@ func init() {
 			ctx.Send("插件已禁用")
 		},
 	})
-
-	engine.OnFullMatch("TestRedis").
-		// SetBlock 设置是否阻断: 可选参数 设置是否阻断后续的触发, 也就是说如果设置为true, 后续的触发器不会被触发, false反之
-		SetBlock(true).
-		// Limit 限速器: 可选参数 限制设置的时间内触发器能够触发多少次, 已经有封装好的限制函数, 可以直接使用
-		// Limit(ctxext.LimitByGroup) 按群号限制10s内5次触发
-		// Limit(ctxext.LimitByUser) 按用户限制10s内5次触发
-		// 也可以自己定义限制函数
-		Limit(ctxext.LimitByGroup).
-		// Handle 处理事件: 必要参数 直接处理事件, 括号内需要填入func(ctx *zero.Ctx){}
-		Handle(func(ctx *zero.Ctx) {
-			val, err := rdb.Get(context.Background(), "key").Result()
-			if err != nil {
-				ctx.SendChain(message.Text(err.Error()))
-			}
-			ctx.SendChain(message.Text(val))
-		})
 	// OnFullMatch 完全匹配触发器: 顾名思义, 收到消息 完全匹配 时就会触发, 所以快下个vscode吧（（（
 	engine.OnFullMatch("完全匹配触发器").
 		// SetBlock 设置是否阻断: 可选参数 设置是否阻断后续的触发, 也就是说如果设置为true, 后续的触发器不会被触发, false反之

@@ -26,6 +26,7 @@ require (
 	github.com/fumiama/gotracemoe v0.0.3
 	github.com/fumiama/jieba v0.0.0-20221203025406-36c17a10b565
 	github.com/fumiama/unibase2n v0.0.0-20221020155353-02876e777430
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jozsefsallai/gophersauce v1.0.1
@@ -50,6 +51,8 @@ require (
 require (
 	github.com/ajstarks/svgo v0.0.0-20200320125537-f189e35d30ca // indirect
 	github.com/antchfx/xpath v1.2.1 // indirect
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/ericpauley/go-quantize v0.0.0-20200331213906-ae555eb2afa4 // indirect
 	github.com/faiface/beep v1.1.0 // indirect
 	github.com/fumiama/go-simple-protobuf v0.1.0 // indirect
