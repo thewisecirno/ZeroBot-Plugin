@@ -72,7 +72,7 @@ func init() {
 			}
 			size := len(val)
 			r := rand.New(rand.NewSource(time.Now().Unix()))
-			ctx.SendChain(message.Text(val[r.Intn(size-1)]))
+			ctx.SendChain(message.Text(val[r.Intn(size)]))
 		})
 
 	//engine.OnKeywordGroup([]string{"车万皇帝", "车万皇上"}).
