@@ -64,6 +64,9 @@ func init() {
 		Limit(ctxext.LimitByGroup).
 		Handle(func(ctx *zero.Ctx) {
 			val, err := rdb.SMembers(context.Background(), "KokoroHataZB").Result()
+			if err == redis.Nil || len(val) == 0 || val == nil {
+				return
+			}
 			if err != nil {
 				ctx.SendChain(message.Text(err.Error()))
 			}
