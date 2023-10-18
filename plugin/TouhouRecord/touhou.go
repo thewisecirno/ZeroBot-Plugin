@@ -31,7 +31,7 @@ func init() {
 			"- 琪露诺\n",
 	})
 
-	engine.OnFullMatch("灵梦在吗").
+	engine.OnKeywordGroup([]string{"灵梦", "赤色杀人魔", "博丽灵梦", "Remei"}).
 		SetBlock(true).
 		Limit(ctxext.LimitByGroup).
 		Handle(func(ctx *zero.Ctx) {
@@ -44,7 +44,8 @@ func init() {
 			r := rand.New(rand.NewSource(time.Now().Unix()))
 			ctx.SendChain(message.Text(val[r.Intn(size-1)]))
 		})
-	engine.OnFullMatch("琪露诺在吗").
+
+	engine.OnKeywordGroup([]string{"琪露诺", "⑨", "Cirno"}).
 		SetBlock(true).
 		Limit(ctxext.LimitByGroup).
 		Handle(func(ctx *zero.Ctx) {
@@ -58,10 +59,32 @@ func init() {
 			ctx.SendChain(message.Text(val[r.Intn(size-1)]))
 		})
 
-	engine.OnFullMatch("秦心").
+	engine.OnKeywordGroup([]string{"秦心", "秦大将军", "zb", "秦心大将军"}).
 		SetBlock(true).
 		Limit(ctxext.LimitByGroup).
 		Handle(func(ctx *zero.Ctx) {
-			ctx.SendChain(message.Text("忠！诚！"))
+			val, err := rdb.SMembers(context.Background(), "KokoroHataZB").Result()
+			if err != nil {
+				ctx.SendChain(message.Text(err.Error()))
+			}
+			size := len(val)
+			r := rand.New(rand.NewSource(time.Now().Unix()))
+			ctx.SendChain(message.Text(val[r.Intn(size-1)]))
+		})
+
+	//engine.OnKeywordGroup([]string{"车万皇帝", "车万皇上"}).
+	//	SetBlock(true).
+	//	Limit(ctxext.LimitByGroup).
+	//	Handle(func(ctx *zero.Ctx) {
+	//		ctx.Event.
+	//			ctx.SendChain(message.Text(val[r.Intn(size-1)]))
+	//	})
+
+	engine.OnKeywordGroup([]string{"Test zero.context"}).
+		SetBlock(true).
+		Limit(ctxext.LimitByGroup).
+		Handle(func(ctx *zero.Ctx) {
+			ctx.SendChain(message.Text("context.Event:", ctx.Event))
+			ctx.SendChain(message.Text("context.State:", ctx.State))
 		})
 }
