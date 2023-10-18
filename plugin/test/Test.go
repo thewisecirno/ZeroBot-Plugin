@@ -1,7 +1,5 @@
-// Package test Package example 这是zbp的插件编写教学示例
 package test
 
-// import 用来放置你所需要导入的东西, 萌新推荐使用vscode, 它会帮你干很多事
 import (
 	"context"
 	"github.com/go-redis/redis/v8"
@@ -19,7 +17,6 @@ import (
 // 自定义限制函数, 括号内填入(时间,触发次数)
 var examplelimit = ctxext.NewLimiterManager(time.Second*10, 1)
 
-// 这里就是插件主体了
 func init() {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "47.115.217.189:6379",
